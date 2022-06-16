@@ -1,0 +1,5 @@
+{
+  "serverPort": 5000,
+  "host": "http://localhost/",
+  "dbUrl": "mongodb+srv://root:123456789zzz@cloud-disk.waoe4uy.mongodb.net/?retryWrites=true&w=majority"
+}
