@@ -1,6 +1,6 @@
 const MIN_PASSWORD_LENGTH = 3;
 const MAX_PASSWORD_LENGTH = 100;
-const SALT_ROUND = 15;
+const SALT_ROUND = 8;
 
 module.exports = {
   MIN_PASSWORD_LENGTH,
