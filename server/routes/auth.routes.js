@@ -13,7 +13,7 @@ const config = require('config');
 
 const router = new Router();
 
-router.post('/registration',
+router.post('/authorization',
   [
     check('email', 'Uncorrect email').isEmail(),
     check('password',

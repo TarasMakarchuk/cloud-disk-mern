@@ -2,7 +2,7 @@
 
 input {
   border: none;
-  border-bottom: @font-color solid 3px;
+  border-bottom: @font-color solid 2px;
   background: transparent;
   width: 100%;
   padding: 10px;
@@ -10,5 +10,12 @@ input {
   &:focus {
     outline: none;
     transform: scale(1.01);
+  }
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    box-shadow: 0 0 0 30px #ffffff inset !important;
   }
 }
