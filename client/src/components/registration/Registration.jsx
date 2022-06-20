@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './registration.css';
 import Input from "../../utils/input/Input";
+import {registration} from "../../actions/user";
 
 const Registration = () => {
   const [email, setEmail] = useState('');
@@ -23,7 +24,11 @@ const Registration = () => {
         setValue={setPassword}
         defaultValue={password}
       />
-      <button className="registration__btn">Sign In</button>
+      <button
+        className="registration__btn"
+        onClick={() => registration(email, password)}>
+        Sign In
+      </button>
     </div>
   );
 };
