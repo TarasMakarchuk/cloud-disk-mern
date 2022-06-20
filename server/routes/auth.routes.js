@@ -7,7 +7,7 @@ const {
 const Router = require('express');
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
-const {check, validationResult} =require('express-validator')
+const { check, validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken');
 const config = require('config');
 
@@ -76,6 +76,5 @@ router.post('/login', async (req, res) => {
       res.send({ message: 'Server error' });
     }
   });
-
 
 module.exports = router;
