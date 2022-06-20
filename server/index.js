@@ -20,7 +20,7 @@ const start = async () => {
       console.log(`Server start on: ${HOST}${PORT}`);
     })
   } catch (e) {
-
+    console.log(e);
   }
 };
 

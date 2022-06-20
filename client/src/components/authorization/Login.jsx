@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import './registration.css';
+import './authorization.css';
 import Input from "../../utils/input/Input";
-import {registration} from "../../actions/user";
+import { useDispatch } from "react-redux";
+import {login} from "../../actions/user";
 
-const Registration = () => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
 
   return (
-    <div className='registration'>
-      <div className="registration__header">Registration</div>
+    <div className='authorization'>
+      <div className="authorization__header">Login</div>
       <Input
         type="text"
         placeholder="email"
@@ -25,12 +27,13 @@ const Registration = () => {
         defaultValue={password}
       />
       <button
-        className="registration__btn"
-        onClick={() => registration(email, password)}>
+        className="authorization__btn"
+        onClick={() => dispatch(login(email, password))}
+      >
         Sign In
       </button>
     </div>
   );
 };
 
-export default Registration;
+export default Login;
