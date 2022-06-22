@@ -10,6 +10,8 @@ const { check, validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const authMiddleware = require('../middleware/auth.middleware');
+const fileService = require('../services/fileService');
+const File = require('../models/File');
 
 const router = new Router();
 
@@ -24,7 +26,7 @@ router.post('/registration',
     try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ message: `Uncorrect result`, errors});
+      return res.status(400).json({ message: `Uncorrect request`, errors});
     }
 
     const { email, password } = req.body;
@@ -36,6 +38,7 @@ router.post('/registration',
     const hashPassword = await bcrypt.hash(password, SALT_ROUND);
     const user = new User({ email, password: hashPassword });
     await user.save();
+    await fileService.createDir(new File({ user: user._id, name: '' }));
 
     return res.json({ message: `User was created` });
     
