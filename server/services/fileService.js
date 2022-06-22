@@ -1,10 +1,17 @@
 const fs = require('fs');
 const config = require('config');
+const path = require('path');
 
 class FileService {
 
   createDir(file) {
-    const filePath = `${config.get('filePath')}\\${file.user}\\${file.path}`;
+    const dir = path.join(`${config.get('filePath')}`, `files`);
+
+    if (!fs.existsSync(dir)){
+      fs.mkdirSync(dir);
+    }
+
+    const filePath = path.join(dir, `${file.user}`, `${file.path}`);
     return new Promise((resolve, reject) => {
       try {
         if (!fs.existsSync(filePath)) {

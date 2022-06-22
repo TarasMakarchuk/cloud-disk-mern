@@ -3,5 +3,5 @@
   "host": "http://localhost/",
   "dbUrl": "mongodb+srv://root:123456789zzz@cloud-disk.waoe4uy.mongodb.net/?retryWrites=true&w=majority",
   "secretKey": "secret",
-  "filePath": "C:\\Users\\User\\WebstormProjects\\all_projects\\ulbi-tv\\cloud-disk-mern\\server\\files"
+  "filePath": "C:\\Users\\User\\WebstormProjects\\all_projects\\ulbi-tv\\cloud-disk-mern\\server"
 }
