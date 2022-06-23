@@ -5,9 +5,9 @@ class FileController {
 
   async createDir(req, res) {
     try {
-      const {name, type, parent} = req.body
-      const file = new File({name, type, parent, user: req.user.id})
-      const parentFile = await File.findOne({_id: parent})
+      const { name, type, parentId } = req.body
+      const file = new File({name, type, parentId, user: req.user.id})
+      const parentFile = await File.findOne({_id: parentId})
       if(!parentFile) {
         file.path = name;
         await fileService.createDir(file)
@@ -27,7 +27,7 @@ class FileController {
 
   async getFiles (req, res) {
     try {
-      const files = await File.find({ user: req.user.id, parent: req.query.parent});
+      const files = await File.find({ user: req.user.id, parentId: req.query.parentId});
       return res.json(files);
 
     } catch (e) {
