@@ -3,7 +3,7 @@ import './navbar.css';
 import Logo from '../../assets/img/navbar_logo.svg';
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {logout} from "../../reducers/userReducer";
+import { logout } from "../../reducers/userReducer";
 
 const Navbar = () => {
   const isAuth = useSelector(state => state.user.isAuth);
@@ -31,7 +31,9 @@ const Navbar = () => {
           </div>
         }
         {
-          isAuth && <div className="navbar__login" onClick={() => dispatch(logout())}>
+          isAuth && <div className="navbar__login"
+            onClick={() => dispatch(logout())}
+          >
             Logout
           </div>
         }
