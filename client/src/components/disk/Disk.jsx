@@ -4,11 +4,12 @@ import { getFiles } from "../../actions/file";
 import FilesList from "./filesList/FilesList";
 import './disk.css';
 import Popup from "./Popup";
-import { setPopupDisplay } from "../../reducers/fileReducer";
+import { setCurrentDir, setPopupDisplay } from "../../reducers/fileReducer";
 
 const Disk = () => {
   const dispatch = useDispatch();
   const currentDir = useSelector(state => state.files.currentDir);
+  const dirStack = useSelector(state => state.files.dirStack);
 
   useEffect(() => {
     dispatch(getFiles(currentDir));
@@ -18,14 +19,29 @@ const Disk = () => {
     dispatch(setPopupDisplay('flex'));
   }
 
+  function backHandler() {
+    const backDirId = dirStack.pop();
+    dispatch(setCurrentDir(backDirId));
+  }
+
   return (
     <div className='disk'>
       <div className="disk__btns">
-        <button className="disk__back">Back</button>
-        <button className="disk__create" onClick={() => createFolderHandler()}>Create folder</button>
+        <button
+          className="disk__back"
+          onClick={() => backHandler()}
+        >
+          Back
+        </button>
+        <button
+          className="disk__create"
+          onClick={() => createFolderHandler()}
+        >
+          Create folder
+        </button>
       </div>
-      <FilesList />
-      <Popup />
+      <FilesList/>
+      <Popup/>
     </div>
   );
 };
