@@ -9,21 +9,24 @@ const File = ({ file }) => {
   const date = new Date(file.date).toLocaleString();
   const dispatch = useDispatch();
   const currentDir = useSelector(state => state.files.currentDir);
+  const formatFileSize = new Intl.NumberFormat("us", {style: "decimal"}).format(file.size);
 
-  function openFolderHandler() {
-    dispatch(pushToStack(currentDir));
-    dispatch(setCurrentDir(file._id));
+  function openFolderHandler(file) {
+    if (file.type === 'dir') {
+      dispatch(pushToStack(currentDir));
+      dispatch(setCurrentDir(file._id));
+    }
   }
 
   return (
     <div
       className='file'
-      onClick={ file.type === 'dir' ? () => openFolderHandler(): ''}
+      onClick={() => openFolderHandler(file)}
     >
-      <img src={file.type === 'dir' ? folderImg : fileImg} alt="image" className="file__img"/>
+      <img src={file.type === 'dir' ? folderImg : fileImg} alt="" className="file__img"/>
       <div className="file__title">{file.name}</div>
       <div className="file__date">{date}</div>
-      <div className="file__size">{file.size}</div>
+      <div className="file__size">{formatFileSize}</div>
     </div>
   );
 };
