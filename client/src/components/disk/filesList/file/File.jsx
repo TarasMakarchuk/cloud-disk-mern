@@ -11,12 +11,12 @@ const File = ({ file }) => {
   const currentDir = useSelector(state => state.files.currentDir);
   const formatFileSize = new Intl.NumberFormat("us", {style: "decimal"}).format(file.size);
 
-  function openFolderHandler(file) {
+  const openFolderHandler = file => {
     if (file.type === 'dir') {
       dispatch(pushToStack(currentDir));
       dispatch(setCurrentDir(file._id));
     }
-  }
+  };
 
   return (
     <div
