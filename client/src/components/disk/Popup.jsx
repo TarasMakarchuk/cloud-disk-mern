@@ -10,11 +10,11 @@ const Popup = () => {
   const currentDir = useSelector(state => state.files.currentDir);
   const dispatch = useDispatch();
 
-  function createHandler() {
+  const createHandler = () => {
     dispatch(createFolder(currentDir, folderName));
     dispatch(setPopupDisplay('none'));
     setFolderName('');
-  }
+  };
 
   return (
     <div
