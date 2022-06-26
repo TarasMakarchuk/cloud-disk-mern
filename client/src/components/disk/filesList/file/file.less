@@ -25,4 +25,31 @@
     justify-self: right;
     margin-right: 20px;
   }
+
+  &__btn {
+    display: none;
+    padding: 5px;
+    margin-left: 5px;
+  }
+
+  &:hover &__btn {
+    background-color: @font-color;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  &:hover &__date, &__size {
+    display: none;
+  }
+
+  &:hover &__download {
+    grid-column-start: 5;
+    display: block;
+  }
+
+  &:hover &__delete {
+    grid-column-start: 6;
+    display: block;
+  }
 }
