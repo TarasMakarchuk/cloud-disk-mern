@@ -12,7 +12,7 @@ class FileController {
       const { name, type, parentId } = req.body
       const file = new File({name, type, parentId, user: req.user.id})
       const parentFile = await File.findOne({_id: parentId})
-      if(!parentFile) {
+      if (!parentFile) {
         file.path = name;
         await fileService.createDir(file)
       } else {
@@ -68,7 +68,7 @@ class FileController {
         name: file.name,
         type,
         size: file.size,
-        path: parent?.path,
+        path: filePath,
         parentId: parent?.parentId,
         user: user._id,
       });
@@ -96,6 +96,26 @@ class FileController {
     } catch (e) {
       console.log(e);
       return res.status(500).json({ message: 'Download error'});
+    }
+  }
+
+  async deleteFile(req, res) {
+    try {
+      const file = await File.findOne({ _id: req.query.id, user: req.user.id });
+      if (!file) {
+        await res.status(400).json({ message: 'file not found'})
+      }
+      fileService.deleteFile(file);
+      await file.remove();
+
+      if (file.type === 'dir') {
+        return res.json({ message: 'Dir was deleted' });
+      }
+
+      return res.json({ message: 'File was deleted' });
+    } catch (e) {
+      console.log(e);
+      return res.status(400).json({ message: 'Dir should be empty'})
     }
   }
 

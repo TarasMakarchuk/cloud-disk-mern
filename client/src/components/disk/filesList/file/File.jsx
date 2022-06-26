@@ -4,7 +4,7 @@ import folderImg from '../../../../assets/img/folder.svg';
 import fileImg from '../../../../assets/img/file.svg';
 import { useDispatch, useSelector } from "react-redux";
 import { pushToStack, setCurrentDir } from "../../../../reducers/fileReducer";
-import { downloadFile } from "../../../../actions/file";
+import { deleteFile, downloadFile } from "../../../../actions/file";
 
 const File = ({ file }) => {
   const date = new Date(file.date).toLocaleString();
@@ -24,6 +24,11 @@ const File = ({ file }) => {
     downloadFile(file);
   };
 
+  const deleteClickHandler = event => {
+    event.stopPropagation();
+    dispatch(deleteFile(file));
+  };
+
   return (
     <div
       className='file'
@@ -40,7 +45,12 @@ const File = ({ file }) => {
       >
         Download
       </button>}
-      <button className='file__btn file__delete'>Delete</button>
+      <button
+        className='file__btn file__delete'
+        onClick={(event) => deleteClickHandler(event)}
+      >
+        Delete
+      </button>
     </div>
   );
 };
