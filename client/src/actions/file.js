@@ -1,10 +1,12 @@
 import axios from "axios";
 import { addFile, deleteFileAction, setFiles } from "../reducers/fileReducer";
 import { addUploadFile, changeUploadFile, showUploader } from "../reducers/uploadReducer";
+import { hideLoader, showLoader } from "../reducers/appReducer";
 
 export function getFiles (dirId, sort) {
   return async dispatch => {
     try {
+      dispatch(showLoader());
       let url = `http://localhost:5000/api/files`;
 
       if (dirId) {
@@ -24,6 +26,8 @@ export function getFiles (dirId, sort) {
       dispatch(setFiles(response.data));
     } catch (e) {
       alert(e.response.data.message);
+    } finally {
+      dispatch(hideLoader());
     }
   };
 }
