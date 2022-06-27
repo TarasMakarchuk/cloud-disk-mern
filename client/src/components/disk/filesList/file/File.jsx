@@ -5,12 +5,12 @@ import fileImg from '../../../../assets/img/file.svg';
 import { useDispatch, useSelector } from "react-redux";
 import { pushToStack, setCurrentDir } from "../../../../reducers/fileReducer";
 import { deleteFile, downloadFile } from "../../../../actions/file";
+import sizeFormat from "../../../../utils/file/sizeFormat";
 
 const File = ({ file }) => {
   const date = new Date(file.date).toLocaleString();
   const dispatch = useDispatch();
   const currentDir = useSelector(state => state.files.currentDir);
-  const formatFileSize = new Intl.NumberFormat("us", {style: "decimal"}).format(file.size);
 
   const openFolderHandler = file => {
     if (file.type === 'dir') {
@@ -37,7 +37,7 @@ const File = ({ file }) => {
       <img src={file.type === 'dir' ? folderImg : fileImg} alt="" className="file__img"/>
       <div className="file__title">{file.name}</div>
       <div className="file__date">{date}</div>
-      <div className="file__size">{formatFileSize}</div>
+      <div className="file__size">{file.type === 'dir'? '': sizeFormat(file.size)}</div>
       {file.type !== 'dir' &&
       <button
         className='file__btn file__download'
