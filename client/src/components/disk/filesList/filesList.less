@@ -17,6 +17,22 @@
 
   &__size {
     grid-column-start: 6;
-    justify-self: left;
+    justify-self: center;
+  }
+}
+
+.file-enter-active {
+  animation: file-enter 200ms forwards;
+}
+
+@keyframes file-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(-10%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
