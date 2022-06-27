@@ -9,13 +9,24 @@
 
   &__create {
     margin-left: 20px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
   }
+
+  &__back {
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+  }
+
 
   &__upload-input {
     display: none;
   }
 
   &__upload-label {
+    display: flex;
     border: 1px solid @font-color;
     padding: 5px 10px;
     cursor: pointer;
@@ -26,6 +37,13 @@
     &:hover {
       background-color: #dbdbdb;
     }
+  }
+
+  &__select{
+    margin-left: 20px;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
   }
 }
 
@@ -69,6 +87,7 @@
     border-radius: 5px;
     background-color: @font-color;
     color: white;
+    cursor: pointer;
 
     &:hover {
       background-color: #355590;
@@ -81,6 +100,7 @@
     background: white;
     font-weight: 700;
     font-size: 16px;
+    cursor: pointer;
 
     &:hover {
       color: red;

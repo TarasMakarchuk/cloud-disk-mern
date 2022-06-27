@@ -31,9 +31,26 @@ class FileController {
 
   async getFiles (req, res) {
     try {
-      const files = await File.find({ user: req.user.id, parentId: req.query.parentId });
-      return res.json(files);
+      const { sort } = req.query;
+      let files;
 
+      switch (sort) {
+        case 'name':
+          files = await File.find({ user: req.user.id, parentId: req.query.parentId }).sort({ name: 1 });
+          break;
+        case 'type':
+          files = await File.find({ user: req.user.id, parentId: req.query.parentId }).sort({ type: 1 });
+          break;
+        case 'date':
+          files = await File.find({ user: req.user.id, parentId: req.query.parentId }).sort({ date: 1 });
+          break;
+
+        default:
+          files = await File.find({ user: req.user.id, parentId: req.query.parentId });
+          break;
+      }
+
+      return res.json(files);
     } catch (e) {
       console.log(e);
       return res.status(500).json({ message: 'Server can\'t send files'});
