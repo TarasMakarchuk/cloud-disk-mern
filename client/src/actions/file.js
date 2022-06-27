@@ -107,7 +107,7 @@ export async function downloadFile(file) {
   }
 }
 
-export function deleteFile (file) {
+export function deleteFile(file) {
   return async dispatch => {
     try {
       const response = await axios.delete(`http://localhost:5000/api/files?id=${file._id}`, {
@@ -118,7 +118,24 @@ export function deleteFile (file) {
       dispatch(deleteFileAction(file._id));
       alert(response.data.message);
     } catch (e) {
-      alert(e.response.data.message);
+      alert(e?.response?.data?.message);
+    }
+  };
+}
+
+export function searchFiles(search) {
+  return async dispatch => {
+    try {
+      const response = await axios.get(`http://localhost:5000/api/files/search?search=${search}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      dispatch(setFiles(response.data));
+    } catch (e) {
+      alert(e?.response?.data?.message);
+    } finally {
+      dispatch(hideLoader());
     }
   };
 }
