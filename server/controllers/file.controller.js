@@ -152,9 +152,28 @@ class FileController {
   }
 
   async uploadAvatar(req, res) {
+    const oneKb = 1024;
+    const minSize = oneKb*100;
+    const maxSize = oneKb*oneKb*2;
+    const regExp = /\/(jpg|jpeg|gif|png)$/;
+
+    if(!req.files) {
+      return res.status(400).json({ message: "File should be selected" });
+    }
+
     try {
       const file = req.files.file;
       const dir = path.join(`${config.get('filePath')}`, `static`);
+
+      if (!file.mimetype.match(regExp)) {
+        return res.status(400).json({ message: "Avatar should be image type" });
+      }
+      if (file.size < minSize) {
+        return res.status(400).json({ message: `Avatar size should be more than ${minSize/oneKb}Kb` });
+      }
+      if (file.size > maxSize) {
+        return res.status(400).json({ message: `Avatar size should be less than ${maxSize/oneKb/oneKb}Mb` });
+      }
 
       if (!fs.existsSync(dir)){
         fs.mkdirSync(dir);
