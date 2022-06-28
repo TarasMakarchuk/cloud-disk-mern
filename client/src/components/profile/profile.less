@@ -1,0 +1,54 @@
+@import '../../utils/colors';
+
+.profile {
+  //background-color: #dbdbdb;
+  width: 90%;
+  height: 90vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 20px;
+  border-radius: 5px;
+  border: 1px dashed @font-color;
+
+  &__avatar-upload {
+    display: none;
+  }
+
+  &__avatar-label {
+    width: 150px;
+    height: 35px;
+    display: flex;
+    border: 1px solid @font-color;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin: 30px;
+    background: white;
+    border-radius: 5px;
+    justify-content: center;
+
+    &:hover {
+      background-color: #dbdbdb;
+    }
+  }
+
+  &__delete {
+    padding: 5px;
+    background-color: @font-color;
+    color: white;
+    border-radius: 5px;
+    width: 150px;
+    height: 35px;
+    margin: 30px 30px;
+  }
+
+  &__back {
+    cursor: pointer;
+    margin-top: 10px;
+
+    &:hover {
+      background-color: white;
+      border-radius: 18px;
+    }
+  }
+}
