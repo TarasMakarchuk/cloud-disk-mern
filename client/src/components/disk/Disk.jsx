@@ -4,7 +4,7 @@ import { getFiles, uploadFile } from "../../actions/file";
 import FilesList from "./filesList/FilesList";
 import './disk.css';
 import Popup from "./Popup";
-import { setCurrentDir, setPopupDisplay } from "../../reducers/fileReducer";
+import {setCurrentDir, setFileView, setPopupDisplay} from "../../reducers/fileReducer";
 import Uploader from "./uploader/Uploader";
 import spinner from '../../assets/img/Spinner-1s-200px.svg';
 
@@ -62,7 +62,8 @@ const Disk = () => {
     )
   }
 
-  return ( !dragEnter ?
+  return ( !dragEnter
+      ?
     <div className='disk' onDragEnter={dragEnterHandler} onDragLeave={dragLeaveHandler} onDragOver={dragEnterHandler}>
       <div className="disk__btns">
         <button className="disk__back" onClick={() => backHandler()}>Back</button>
@@ -82,6 +83,8 @@ const Disk = () => {
           <option value="type">Type</option>
           <option value="date">Date</option>
         </select>
+        <button className="disk__plate" onClick={() => dispatch(setFileView('plate'))} />
+        <button className="disk__list" onClick={() => dispatch(setFileView('list'))} />
       </div>
       <FilesList />
       <Popup />
