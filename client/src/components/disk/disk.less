@@ -13,14 +13,15 @@
     padding: 5px;
     border-radius: 5px;
     min-width: 100px;
+    border: 1px solid @font-color;
   }
 
   &__back {
     cursor: pointer;
     padding: 5px;
     border-radius: 5px;
+    border: 1px solid @font-color;
   }
-
 
   &__upload-input {
     display: none;
@@ -43,11 +44,31 @@
   }
 
   &__select {
-    margin-left: 780px;
+    margin-left: 720px;
+    margin-right: 5px;
     padding: 5px;
     border-radius: 5px;
     cursor: pointer;
     text-align: center;
+  }
+
+  &__list, &__plate {
+    height: 20px;
+    width: 20px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background: no-repeat center center;
+    background-size: contain;
+    margin: 5px 5px;
+  }
+
+  &__list {
+    background-image: url("../../assets/img/list.svg");
+  }
+
+  &__plate {
+    background-image: url("../../assets/img/plate.svg");
   }
 }
 

@@ -6,6 +6,7 @@
   display: grid;
   grid-template-columns: 1fr 4fr repeat(4, 1fr);
   align-items: center;
+  cursor: pointer;
 
   &:hover {
     background-color: #dcdcdc;
@@ -53,4 +54,40 @@
     grid-column-start: 6;
     display: block;
   }
+}
+
+.file-plate {
+  width: 150px;
+  height: 150px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__img {
+    height: 80px;
+    width: 80px;
+  }
+
+  &__btn {
+    background-color: @font-color;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 7px 10px;
+    margin-left: 5px;
+    border: 0;
+  }
+
+  &__btns {
+    display: none;
+  }
+
+  &:hover &__btns {
+    display: flex;
+  }
+}
+
+.folder-plate__img {
+  cursor: pointer;
 }
