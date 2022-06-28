@@ -4,6 +4,7 @@ const User = require('../models/User');
 const config = require('config');
 const path = require('path');
 const fs = require('fs');
+const uuid = require('uuid');
 
 class FileController {
 
@@ -12,16 +13,18 @@ class FileController {
       const { name, type, parentId } = req.body
       const file = new File({name, type, parentId, user: req.user.id})
       const parentFile = await File.findOne({_id: parentId})
+
       if (!parentFile) {
         file.path = name;
         await fileService.createDir(file)
       } else {
-        file.path = `${parentFile.path}\\${file.name}`
+        file.path = path.join(parentFile.path, file.name);
         await fileService.createDir(file);
         parentFile.childs.push(file._id)
         await parentFile.save()
       }
       await file.save()
+
       return res.json(file)
     } catch (e) {
       console.log(e)
@@ -53,7 +56,7 @@ class FileController {
       return res.json(files);
     } catch (e) {
       console.log(e);
-      return res.status(500).json({ message: 'Server can\'t send files'});
+      return res.status(500).json({ message: 'Server can\'t send files' });
     }
   };
 
@@ -95,7 +98,7 @@ class FileController {
       await res.json(dbFile);
     } catch (e) {
       console.log(e);
-      return res.status(500).json({ message: 'Upload error'});
+      return res.status(500).json({ message: 'Upload error' });
     }
   };
 
@@ -108,11 +111,11 @@ class FileController {
         return res.download(filePath, file.name);
       }
 
-      return res.status(400).json({ message: 'Download error'});
+      return res.status(400).json({ message: 'Download error' });
 
     } catch (e) {
       console.log(e);
-      return res.status(500).json({ message: 'Download error'});
+      return res.status(500).json({ message: 'Download error' });
     }
   }
 
@@ -120,7 +123,7 @@ class FileController {
     try {
       const file = await File.findOne({ _id: req.query.id, user: req.user.id });
       if (!file) {
-        await res.status(400).json({ message: 'file not found'})
+        await res.status(400).json({ message: 'file not found' })
       }
       fileService.deleteFile(file);
       await file.remove();
@@ -132,7 +135,7 @@ class FileController {
       return res.json({ message: 'File was deleted' });
     } catch (e) {
       console.log(e);
-      return res.status(400).json({ message: 'Dir should be empty'})
+      return res.status(400).json({ message: 'Dir should be empty' })
     }
   }
 
@@ -144,7 +147,49 @@ class FileController {
       return res.json(files);
     } catch (e) {
       console.log(e);
-      return res.status(400).json({ message: 'Search error'});
+      return res.status(400).json({ message: 'Search error' });
+    }
+  }
+
+  async uploadAvatar(req, res) {
+    try {
+      const file = req.files.file;
+      const dir = path.join(`${config.get('filePath')}`, `static`);
+
+      if (!fs.existsSync(dir)){
+        fs.mkdirSync(dir);
+      }
+
+      const user = await User.findById(req.user.id);
+
+      if (user.avatar) {
+        fs.unlinkSync(path.join(dir, user.avatar));
+      }
+
+      const avatarName = `${uuid.v4()}.jpg`;
+      await file.mv(path.join(dir, avatarName));
+      user.avatar = avatarName;
+      await user.save();
+
+      return res.json(user);
+    } catch (e) {
+      console.log(e);
+      return res.status(400).json({ message: 'Avatar upload error' });
+    }
+  }
+
+  async deleteAvatar(req, res) {
+    try {
+      const dir = path.join(`${config.get('filePath')}`, `static`);
+      const user = await User.findById(req.user.id);
+      fs.unlinkSync(path.join(dir, user.avatar));
+      user.avatar = null;
+      await user.save();
+
+      return res.json(user);
+    } catch (e) {
+      console.log(e);
+      return res.status(400).json({ message: 'Delete avatar error' });
     }
   }
 
