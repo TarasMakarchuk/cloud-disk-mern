@@ -10,6 +10,7 @@ client/dist
 
 server/node_modules
 server/files
+server/static
 
 /.pnp
 .pnp.js
