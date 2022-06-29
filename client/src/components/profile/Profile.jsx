@@ -10,7 +10,6 @@ const Profile = () => {
   const isAuth = useSelector(state => state.user.isAuth);
 
   const changeHandler = event => {
-    console.log(event);
     const file = event.target.files[0];
     dispatch(uploadAvatar(file));
   };
@@ -21,7 +20,6 @@ const Profile = () => {
         <img className='profile__back' src={back} alt=""/>
       </NavLink>
       }
-        {/*<button className="disk__back" onClick={() => backHandler()}>Back</button>*/}
         <label htmlFor="profile__avatar-upload" className="profile__avatar-label">Upload avatar</label>
         <input
           className='profile__avatar-upload'
@@ -30,7 +28,6 @@ const Profile = () => {
           onChange={event => changeHandler(event)}
           type="file"
           placeholder="Upload avatar"
-          multiple={false}
         />
 
 

@@ -1,17 +1,16 @@
 const fs = require('fs');
-const config = require('config');
 const path = require('path');
 
 class FileService {
 
-  createDir(file) {
-    const dir = path.join(`${config.get('filePath')}`, `files`);
+  createDir(req, file) {
+    const dir = req.filePath;
 
     if (!fs.existsSync(dir)){
       fs.mkdirSync(dir);
     }
 
-    const filePath = path.join(dir, `${file.user}`, `${file.path}`);
+    const filePath = this.getPath(req, file);
     return new Promise((resolve, reject) => {
       try {
         if (!fs.existsSync(filePath)) {
@@ -26,20 +25,19 @@ class FileService {
     })
   }
 
-  deleteFile(file) {
-    const filePath = this.getPath(file);
+  deleteFile(req, file) {
     if (file.type === 'dir') {
-      fs.rmdirSync(filePath);
+      fs.rmdirSync(file.path);
     } else {
-      fs.unlinkSync(filePath);
+      fs.unlinkSync(file.path);
     }
   }
 
-  getPath(file) {
+  getPath(req, file) {
     if ( file.type === 'dir') {
-      return path.join(`${config.get('filePath')}`, `files`, `${file.user}`, `${file.path}`);
+      return path.join(`${req.filePath}`, `${file.user}`, `${file.path}`);
     }
-    return path.join(`${config.get('filePath')}`, `files`, `${file.user}`, `${file.name}`);
+    return path.join(`${req.filePath}`, `${file.user}`, `${file.name}`);
   }
 
 }

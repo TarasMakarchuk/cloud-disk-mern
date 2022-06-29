@@ -16,7 +16,7 @@ class FileController {
 
       if (!parentFile) {
         file.path = name;
-        await fileService.createDir(file)
+        await fileService.createDir(req, file);
       } else {
         file.path = path.join(parentFile.path, file.name);
         await fileService.createDir(file);
@@ -73,9 +73,9 @@ class FileController {
 
       let filePath;
       if (parent) {
-        filePath = path.join(config.get('filePath'), 'files' , user.id, parent.path, file.name);
+        filePath = path.join(req.filePath, user.id, parent.path, file.name);
       } else {
-        filePath = path.join(config.get('filePath'), 'files' , user.id, file.name);
+        filePath = path.join(req.filePath , user.id, file.name);
       }
 
       if (fs.existsSync(filePath)) {
@@ -89,7 +89,7 @@ class FileController {
         type,
         size: file.size,
         path: filePath,
-        parentId: parent?.parentId,
+        parentId: parent ? parent._id : null,
         user: user._id,
       });
       await dbFile.save();
@@ -105,7 +105,7 @@ class FileController {
   async downloadFile(req, res) {
     try {
       const file = await File.findOne({ _id: req.query.id, user: req.user.id });
-      const filePath = fileService.getPath(file);
+      const filePath = file.path;
 
       if (fs.existsSync(filePath)) {
         return res.download(filePath, file.name);
@@ -123,9 +123,9 @@ class FileController {
     try {
       const file = await File.findOne({ _id: req.query.id, user: req.user.id });
       if (!file) {
-        await res.status(400).json({ message: 'file not found' })
+        await res.status(400).json({ message: 'file not found' });
       }
-      fileService.deleteFile(file);
+      fileService.deleteFile(req, file);
       await file.remove();
 
       if (file.type === 'dir') {
@@ -135,7 +135,7 @@ class FileController {
       return res.json({ message: 'File was deleted' });
     } catch (e) {
       console.log(e);
-      return res.status(400).json({ message: 'Dir should be empty' })
+      return res.status(400).json({ message: 'Dir should be empty' });
     }
   }
 
@@ -169,10 +169,10 @@ class FileController {
         return res.status(400).json({ message: "Avatar should be image type" });
       }
       if (file.size < minSize) {
-        return res.status(400).json({ message: `Avatar size should be more than ${minSize/oneKb}Kb` });
+        return res.status(400).json({ message: `Avatar size should be more than ${minSize/oneKb} Kb` });
       }
       if (file.size > maxSize) {
-        return res.status(400).json({ message: `Avatar size should be less than ${maxSize/oneKb/oneKb}Mb` });
+        return res.status(400).json({ message: `Avatar size should be less than ${maxSize/oneKb/oneKb} Mb` });
       }
 
       if (!fs.existsSync(dir)){
