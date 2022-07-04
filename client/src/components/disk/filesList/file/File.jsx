@@ -11,6 +11,7 @@ const File = ({ file }) => {
   const date = new Date(file.date).toLocaleString();
   const dispatch = useDispatch();
   const currentDir = useSelector(state => state.files.currentDir);
+  const fileView = useSelector(state => state.files.view);
 
   const openFolderHandler = file => {
     if (file.type === 'dir') {
@@ -29,30 +30,66 @@ const File = ({ file }) => {
     dispatch(deleteFile(file));
   };
 
-  return (
-    <div
-      className='file'
-      onClick={() => openFolderHandler(file)}
-    >
-      <img src={file.type === 'dir' ? folderImg : fileImg} alt="" className="file__img"/>
-      <div className="file__title">{file.name}</div>
-      <div className="file__date">{date}</div>
-      <div className="file__size">{file.type === 'dir'? '': sizeFormat(file.size)}</div>
-      {file.type !== 'dir' &&
-      <button
-        className='file__btn file__download'
-        onClick={(event) => downloadClickHandler(event)}
+  if (fileView === 'list') {
+    return (
+      <div
+        className='file'
+        onClick={() => openFolderHandler(file)}
       >
-        Download
-      </button>}
-      <button
-        className='file__btn file__delete'
-        onClick={(event) => deleteClickHandler(event)}
+        <img src={file.type === 'dir' ? folderImg : fileImg} alt="" className="file__img"/>
+        <div className="file__title">{file.name}</div>
+        <div className="file__date">{date}</div>
+        <div className="file__size">{file.type === 'dir' ? '' : sizeFormat(file.size)}</div>
+        {
+          file.type !== 'dir' &&
+          <button
+            className='file__btn file__download'
+            onClick={(event) => downloadClickHandler(event)}
+          >
+            Download
+          </button>
+        }
+        <button
+          className='file__btn file__delete'
+          onClick={(event) => deleteClickHandler(event)}
+        >
+          Delete
+        </button>
+      </div>
+    );
+  }
+
+  if (fileView === 'plate') {
+    return (
+      <div
+        className='file-plate'
+        onClick={() => openFolderHandler(file)}
       >
-        Delete
-      </button>
-    </div>
-  );
+        <img src={file.type === 'dir' ? folderImg : fileImg} alt="" className="file-plate__img"/>
+        <div className="file-plate__title">{file.name}</div>
+        <div className="file-plate__btns">
+          {
+            file.type !== 'dir' &&
+            <button
+              className='file-plate__btn file__download'
+              onClick={(event) => downloadClickHandler(event)}
+            >
+              Download
+            </button>
+          }
+          <button
+            className='file-plate__btn file__delete'
+            onClick={(event) => deleteClickHandler(event)}
+          >
+            Delete
+          </button>
+        </div>
+
+      </div>
+    );
+  }
+
+
 };
 
 export default File;
