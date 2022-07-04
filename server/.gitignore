@@ -1,10 +1,12 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-.idea
-
 # dependencies
 node_modules
 
+# idea files
+.idea
+
+# folders
 files
 static
 
@@ -13,10 +15,6 @@ static
 
 # testing
 /coverage
-
-# production
-server/build
-
 
 # misc
 .DS_Store

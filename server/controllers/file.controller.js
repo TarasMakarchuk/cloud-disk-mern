@@ -19,7 +19,7 @@ class FileController {
         await fileService.createDir(req, file);
       } else {
         file.path = path.join(parentFile.path, file.name);
-        await fileService.createDir(file);
+        await fileService.createDir(req, file);
         parentFile.childs.push(file._id)
         await parentFile.save()
       }
