@@ -38,7 +38,7 @@ const Navbar = () => {
       <div className="container hhh">
         <img src={Logo} alt="" className='navbar__logo'/>
         <div className="navbar__header">
-          MERN CLOUD
+          CLOUD DISK MERN
         </div>
         {isAuth &&
         <input
