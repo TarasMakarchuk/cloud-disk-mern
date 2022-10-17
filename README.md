@@ -2,6 +2,7 @@
 ![Redux](https://img.shields.io/badge/redux-%5235435.svg?style=for-the-badge&logo=redux&logoColor=white)
 ![Express](https://img.shields.io/badge/exprress-%5235435.svg?style=for-the-badge&logo=express&logoColor=white)
 ![MongoDb](https://img.shields.io/badge/mongodb-%5235435.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+![Heroku](https://img.shields.io/badge/heroku-%5235435.svg?style=for-the-badge&logo=heroku&logoColor=white)
 
 #### This application gives users the ability to store files in the cloud storage. 
 Add, delete, download, sort files, and change the appearance of files and maps. 
@@ -10,6 +11,9 @@ The application is written using react, redux, express and mongodb technologies.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app),
 [Redux](https://redux.js.org/), [Express](https://expressjs.com/), [MongoDb](https://www.mongodb.com/)
+
+### This app is hosted on Heroku. 
+Link to Heroku https://client-cloud-disk-mern.herokuapp.com/login
 
 ## Available Scripts
 
